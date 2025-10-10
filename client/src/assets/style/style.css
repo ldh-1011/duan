@@ -1,0 +1,35 @@
+/* Thay toàn bộ #75d6ca => #224D66 (Xanh navy) */
+/* Thay #b9ece5 => #D1E2EC (Xanh be nhạt tinh tế) */
+
+.tableCheckbox:checked ~ div {
+    @apply border-[#224D66] bg-[#224D66];
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    @apply !border-[#224D66] !bg-[#224D66] dark:!text-white;
+}
+
+.flatpickr-day:hover,
+.flatpickr-day.inRange,
+.flatpickr-day.today.inRange {
+    @apply !border-[#D1E2EC] !bg-[#D1E2EC] dark:!border-meta-4 dark:!bg-meta-4;
+}
+
+.flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n + 1)) {
+    box-shadow: -10px 0 0 #224d66;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+    @apply !fill-[#224D66];
+}
+
+.map-btn .jvm-zoom-btn {
+    @apply hover:border-[#224D66] hover:bg-[#224D66] dark:hover:border-[#224D66] dark:hover:bg-[#224D66];
+}
+
+.taskCheckbox:checked ~ .box {
+    @apply border-[#224D66] bg-[#224D66] dark:border-[#224D66];
+}
