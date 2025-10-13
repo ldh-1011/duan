@@ -34,4 +34,9 @@ public class IsoController {
     public ResponseEntity<?> deleteIso(@PathVariable String id){
         return Helper.createResponseEntity(isoService.deleteIso(id));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getIso(@PathVariable String id){
+        return Helper.createResponseEntity(isoService.findIsoById(id));
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import udpm.hn.server.test.core.common.base.ResponseObject;
 import udpm.hn.server.test.core.staff.resolution.service.ResolutionService;
 import udpm.hn.server.test.entity.Resolution;
+import udpm.hn.server.test.repository.ProductRepository;
 import udpm.hn.server.test.repository.ResolutionRepository;
 
 import java.util.Optional;
@@ -13,7 +14,10 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ResolutionServiceImpl implements ResolutionService {
+
     private final ResolutionRepository resolutionRepository;
+
+    private final ProductRepository productRepository;
 
     @Override
     public ResponseObject<?> getAll() {
@@ -62,7 +66,23 @@ public class ResolutionServiceImpl implements ResolutionService {
             return new ResponseObject<>(null, HttpStatus.NOT_FOUND, "id nay khong ton tai");
         }
 
+        boolean isResolution =  productRepository.existsByResolutionId(id);
+        if (isResolution) {
+            return new ResponseObject<>(null, HttpStatus.BAD_REQUEST,
+                    "Không thể xoá resolution này vì đang được sử dụng trong sản phẩm!");
+        }
+
         resolutionRepository.deleteById(id);
         return new ResponseObject<>(null, HttpStatus.ACCEPTED, "delete thanh cong");
     }
+
+    @Override
+    public ResponseObject<?> findByResolutionId(String id){
+        return new ResponseObject<>(
+                resolutionRepository.findByIdResolution(id),
+                HttpStatus.OK,
+                "lay thanh cong chi tiet resolution"
+        );
+    }
+
 }

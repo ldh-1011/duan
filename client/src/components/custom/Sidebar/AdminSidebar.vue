@@ -82,6 +82,21 @@ const menuItems = computed(() => [
             label: 'Phiên bản',
             icon: 'fa-solid fa-layer-group',
             routeName: ROUTES_CONSTANTS.STAFF_HOME.children.GOODS.children.PROPERTIES.children.VERSION.name
+          },
+          {
+            label: 'Cảm biến',
+            icon: 'fa-solid fa-bullseye',
+            routeName: ROUTES_CONSTANTS.STAFF_HOME.children.GOODS.children.PROPERTIES.children.SENSOR.name
+          },
+          {
+            label: 'ISO',
+            icon: 'fa-solid fa-camera',
+            routeName: ROUTES_CONSTANTS.STAFF_HOME.children.GOODS.children.PROPERTIES.children.ISO.name
+          },
+          {
+            label: 'Dung lượng lưu trữ',
+            icon: 'fa-solid fa-database',
+            routeName: ROUTES_CONSTANTS.STAFF_HOME.children.GOODS.children.PROPERTIES.children.STORAGE_CAPACITY.name
           }
         ]
       }

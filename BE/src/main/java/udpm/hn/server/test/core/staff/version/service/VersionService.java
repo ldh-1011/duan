@@ -12,4 +12,6 @@ public interface VersionService {
     ResponseObject<?> updateVersion(String id, Version version);
 
     ResponseObject<?> deleteVersion(String id);
+
+    ResponseObject<?> findVersionId(String id);
 }

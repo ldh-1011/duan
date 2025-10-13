@@ -2,6 +2,7 @@ package udpm.hn.server.test.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import udpm.hn.server.test.core.staff.iso.model.response.IsoResponse;
 import udpm.hn.server.test.entity.Iso;
@@ -15,4 +16,7 @@ public interface IsoRepository extends JpaRepository<Iso, String> {
     List<IsoResponse> findAllIso();
 
     Optional<Iso> findIsoByIsoName(String isoName);
+
+    @Query(value = "SELECT id AS id, iso_name AS isoName FROM iso WHERE id = :idIso ",nativeQuery = true)
+    Optional<IsoResponse> findIsoById(@Param("idIso") String idIso);
 }

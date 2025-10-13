@@ -7,6 +7,7 @@ import udpm.hn.server.test.core.common.base.ResponseObject;
 import udpm.hn.server.test.core.staff.color.service.ColorService;
 import udpm.hn.server.test.entity.Color;
 import udpm.hn.server.test.repository.ColorRepository;
+import udpm.hn.server.test.repository.ProductDetailRepository;
 
 import java.util.Optional;
 
@@ -14,6 +15,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ColorServiceImpl implements ColorService {
     private final ColorRepository colorRepository;
+
+    private final ProductDetailRepository productDetailRepository;
 
     @Override
     public ResponseObject<?> getAllColor(){
@@ -57,8 +60,22 @@ public class ColorServiceImpl implements ColorService {
         if(optionalColor.isEmpty()){
             return  new ResponseObject<>(null , HttpStatus.NOT_FOUND ,"khong co color nay");
         }
+        boolean isColor = productDetailRepository.existsByColorId(id);
+        if(isColor){
+            return new ResponseObject<>(null, HttpStatus.BAD_REQUEST,
+                    "Không thể xoá màu này vì đang được sử dụng trong sản phẩm chi tiết!");
+        }
         colorRepository.deleteById(id);
 
         return new ResponseObject<>(null , HttpStatus.OK ,"delete color thanh cong");
+    }
+
+    @Override
+    public ResponseObject<?> findAllColorId(String id){
+        return new ResponseObject<>(
+                colorRepository.findByIdColor(id),
+                HttpStatus.OK,
+                "lay chi tiet thanh cong"
+        );
     }
 }

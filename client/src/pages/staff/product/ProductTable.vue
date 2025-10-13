@@ -116,6 +116,12 @@ import { IdcardOutlined, FormOutlined, DeleteFilled, ReloadOutlined } from '@ant
 import { ref, onMounted } from 'vue'
 import { getAllProducts, deleteProduct, changeProductStatus } from '@/services/api/staff/product.api.ts'
 import { toast } from 'vue3-toastify'
+import { watch } from 'vue'
+
+const props = defineProps<{
+  keyword: string
+  status: string
+}>()
 
 const loading = ref(false)
 const page = ref(1)
@@ -143,7 +149,12 @@ const columns = [
 const fetchProducts = async () => {
   loading.value = true
   try {
-    const res = await getAllProducts(page.value, size.value)
+    const res = await getAllProducts(
+      page.value,
+      size.value,
+      props.keyword,
+      props.status
+    )
     if (res.data.success) {
       data.value = res.data.data?.content || res.data.data
       total.value = res.data.data?.totalElements || res.data.data.length
@@ -215,5 +226,12 @@ const handleSuccess = async () => {
   await fetchProducts()
 }
 
+watch(
+  () => [props.keyword, props.status],
+  () => {
+    page.value = 1
+    fetchProducts()
+  }
+)
 onMounted(fetchProducts)
 </script>

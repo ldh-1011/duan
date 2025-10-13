@@ -11,4 +11,6 @@ public interface IsoService {
     ResponseObject<?> updateIso(String id, Iso iso);
 
     ResponseObject<?> deleteIso(String id);
+
+    ResponseObject<?> findIsoById(String id);
 }

@@ -65,4 +65,13 @@ public class SensorServiceImpl implements SensorService {
 
         return new ResponseObject<>(null , HttpStatus.ACCEPTED , "delete thanh cong");
     }
+
+    @Override
+    public ResponseObject<?> findByIdSensor(String id){
+        return new ResponseObject<>(
+                sensorRepository.findByIdSensor(id),
+                HttpStatus.OK,
+                "lay thanh cong sensor chi tiet"
+        );
+    }
 }

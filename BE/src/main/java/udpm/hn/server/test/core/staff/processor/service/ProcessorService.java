@@ -11,4 +11,6 @@ public interface ProcessorService {
     ResponseObject<?> updateTechSpec(String id, Processor processor);
 
     ResponseObject<?> deleteTechSpec(String id);
+
+    ResponseObject<?> findProcessorID(String id);
 }

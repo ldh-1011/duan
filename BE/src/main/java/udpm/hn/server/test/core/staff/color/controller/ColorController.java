@@ -34,4 +34,9 @@ public class ColorController {
         return Helper.createResponseEntity(colorService.deleteColor(id));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getColor(@PathVariable String id) {
+        return Helper.createResponseEntity(colorService.findAllColorId(id));
+    }
+
 }

@@ -1,37 +1,37 @@
 <template>
-  <DivCustom label="Danh sách màu" customClasses="mt-5">
+  <DivCustom label="Danh sách độ phân giải" customClasses="mt-5">
     <template #icon>
       <IdcardOutlined />
     </template>
 
     <template #extra>
-      <a-tooltip title="Thêm mới danh mục">
+      <a-tooltip title="Thêm mới độ phân giải">
         <a-button
-            type="primary"
-            @click="openAddModal"
-            class="flex items-center justify-center px-4"
+          type="primary"
+          @click="openAddModal"
+          class="flex items-center justify-center px-4"
         >
-          Thêm màu
+          Thêm độ phân giải
         </a-button>
       </a-tooltip>
     </template>
 
     <div class="min-h-[360px]">
       <a-table
-          :columns="columns"
-          :data-source="data"
-          bordered
-          :loading="loading"
-          :pagination="{
+        :columns="columns"
+        :data-source="data"
+        bordered
+        :loading="loading"
+        :pagination="{
           current: page,
           pageSize: size,
           total: total,
           showSizeChanger: true,
           pageSizeOptions: ['10', '20', '30']
         }"
-          :scroll="{ x: 500 }"
-          @change="handlePageChange"
-          row-key="id"
+        :scroll="{ x: 500 }"
+        @change="handlePageChange"
+        row-key="id"
       >
         <template #bodyCell="{ column, record, index }">
           <template v-if="column.key === 'orderNumber'">
@@ -40,28 +40,28 @@
 
           <template v-if="column.key === 'operation'">
             <div class="flex items-center gap-2 justify-center">
-              <a-tooltip title="Sửa">
+              <a-tooltip title="Sửa độ phân giải">
                 <a-button
-                    type="default"
-                    class="flex items-center justify-center w-8 h-8"
-                    style="background-color: #e0f2fe; color: #0284c7; border: none;"
-                    @click="openEditModal(record.id)"
+                  type="default"
+                  class="flex items-center justify-center w-8 h-8"
+                  style="background-color: #e0f2fe; color: #0284c7; border: none;"
+                  @click="openEditModal(record.id)"
                 >
                   <FormOutlined />
                 </a-button>
               </a-tooltip>
 
-              <a-tooltip title="Xóa">
+              <a-tooltip title="Xóa độ phân giải">
                 <a-popconfirm
-                    title="Bạn có chắc muốn xóa danh mục này?"
-                    ok-text="Xóa"
-                    cancel-text="Hủy"
-                    @confirm="() => handleDelete(record.id)"
+                  title="Bạn có chắc muốn xóa độ phân giải này?"
+                  ok-text="Xóa"
+                  cancel-text="Hủy"
+                  @confirm="() => handleDelete(record.id)"
                 >
                   <a-button
-                      danger
-                      class="flex items-center justify-center w-8 h-8"
-                      style="background-color: #fee2e2; color: #dc2626; border: none;"
+                    danger
+                    class="flex items-center justify-center w-8 h-8"
+                    style="background-color: #fee2e2; color: #dc2626; border: none;"
                   >
                     <DeleteFilled />
                   </a-button>
@@ -75,23 +75,23 @@
   </DivCustom>
 
   <!-- Modal Thêm/Sửa -->
-  <CategoryModal
-      v-if="modalOpen"
-      :open="modalOpen"
-      :category-id="selectedCategoryId"
-      :title="modalTitle"
-      @close="closeModal"
-      @success="handleSuccess"
+  <ResolutionModal
+    v-if="modalOpen"
+    :open="modalOpen"
+    :resolution-id="selectedResolutionId"
+    :title="modalTitle"
+    @close="closeModal"
+    @success="handleSuccess"
   />
 </template>
 
 <script setup lang="ts">
 import DivCustom from '@/components/custom/Div/DivCustom.vue'
-import CategoryModal from './CategoryModal.vue'
 import { IdcardOutlined, FormOutlined, DeleteFilled } from '@ant-design/icons-vue'
 import { ref, onMounted } from 'vue'
-import { getAllCategories, deleteCategory } from '@/services/api/staff/Category.api'
+import { getAllResolution, deleteResolution } from '@/services/api/staff/resolution.api.ts'
 import { toast } from 'vue3-toastify'
+import ResolutionModal from './ResolutionModal.vue'
 
 const loading = ref(false)
 const page = ref(1)
@@ -100,28 +100,27 @@ const total = ref(0)
 const data = ref<any[]>([])
 
 const modalOpen = ref(false)
-const selectedCategoryId = ref<string | null>(null)
-const modalTitle = ref('Thêm Danh Mục')
+const selectedResolutionId = ref<string | null>(null)
+const modalTitle = ref('Thêm độ phân giải')
 
 const columns = [
   { title: 'STT', key: 'orderNumber', align: 'center', width: 70 },
-  { title: 'Mã danh mục', key: 'categoryCode', dataIndex: 'categoryCode', align: 'center' },
-  { title: 'Tên danh mục', key: 'categoryName', dataIndex: 'categoryName', align: 'center' },
+  { title: 'Tên độ phân giải', key: 'resolutionName', dataIndex: 'resolutionName', align: 'center' },
   { title: 'Hành động', key: 'operation', align: 'center', width: 120 }
 ]
 
-const fetchCategories = async () => {
+const fetchResolutions = async () => {
   loading.value = true
   try {
-    const res = await getAllCategories(page.value, size.value)
+    const res = await getAllResolution()
     if (res.data.success) {
       data.value = res.data.data?.content || res.data.data
       total.value = res.data.data?.totalElements || res.data.data.length
     } else {
-      toast.error(res.data.message || 'Không thể tải danh mục')
+      toast.error(res.data.message || 'Không thể tải danh sách độ phân giải')
     }
   } catch (err) {
-    toast.error('Lỗi khi tải danh mục!')
+    toast.error('Lỗi khi tải danh sách độ phân giải!')
     console.error(err)
   } finally {
     loading.value = false
@@ -130,15 +129,15 @@ const fetchCategories = async () => {
 
 const handleDelete = async (id: string) => {
   try {
-    const res = await deleteCategory(id)
+    const res = await deleteResolution(id)
     if (res.data.success) {
-      toast.success('Xóa danh mục thành công!')
-      await fetchCategories()
+      toast.success('Xóa độ phân giải thành công!')
+      await fetchResolutions()
     } else {
       toast.error(res.data.message || 'Xóa thất bại!')
     }
   } catch (err) {
-    toast.error('Lỗi khi xóa danh mục!')
+    toast.error('Lỗi khi xóa độ phân giải!')
     console.error(err)
   }
 }
@@ -146,18 +145,18 @@ const handleDelete = async (id: string) => {
 const handlePageChange = (pagination: any) => {
   page.value = pagination.current
   size.value = pagination.pageSize
-  fetchCategories()
+  fetchResolutions()
 }
 
 const openAddModal = () => {
-  selectedCategoryId.value = null
-  modalTitle.value = 'Thêm Danh Mục'
+  selectedResolutionId.value = null
+  modalTitle.value = 'Thêm độ phân giải'
   modalOpen.value = true
 }
 
 const openEditModal = (id: string) => {
-  selectedCategoryId.value = id
-  modalTitle.value = 'Cập Nhật Danh Mục'
+  selectedResolutionId.value = id
+  modalTitle.value = 'Cập nhật độ phân giải'
   modalOpen.value = true
 }
 
@@ -166,10 +165,9 @@ const closeModal = () => {
 }
 
 const handleSuccess = async () => {
-  console.log('✅ handleSuccess gọi lại')
   closeModal()
-  await fetchCategories()
+  await fetchResolutions()
 }
 
-onMounted(fetchCategories)
+onMounted(fetchResolutions)
 </script>

@@ -20,7 +20,7 @@ public class WebSocketInterceptor implements HandshakeInterceptor {
             if (token != null) {
                 attributes.put("token", token);
             } else {
-                System.out.println("🚨 Không tìm thấy token trong query param!");
+                System.out.println("");
             }
         }
         return true;

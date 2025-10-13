@@ -11,4 +11,6 @@ public interface StorageCapacityService {
     ResponseObject<?> updateStorageCapacity(String id, StorageCapacity storageCapacity);
 
     ResponseObject<?> deleteStorageCapacity(String id);
+
+    ResponseObject<?> findByIdStorageCapacity(String id);
 }

@@ -11,4 +11,6 @@ public interface SensorService {
     ResponseObject<?> updateSensor(String id, Sensor sensor);
 
     ResponseObject<?> deleteSensor(String id);
+
+    ResponseObject<?> findByIdSensor(String id);
 }

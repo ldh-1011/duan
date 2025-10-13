@@ -2,6 +2,7 @@ package udpm.hn.server.test.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import udpm.hn.server.test.core.staff.sensor.model.response.SensorRequest;
 import udpm.hn.server.test.entity.Sensor;
@@ -15,4 +16,7 @@ public interface SensorRepository extends JpaRepository<Sensor, String> {
     List<SensorRequest> findAllSensors();
 
     Optional<Sensor> findBySensorName(String sensorName);
+
+    @Query(value = "SELECT id AS id , sensor_name AS sensorName FROM sensor WHERE id = :idSensor",nativeQuery = true)
+    Optional<SensorRequest> findByIdSensor(@Param("idSensor") String idSensor);
 }

@@ -33,4 +33,9 @@ public class VersionController {
     public ResponseEntity<?> deleteVersion(@PathVariable String id) {
         return Helper.createResponseEntity(versionService.deleteVersion(id));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getVersionId(@PathVariable String id) {
+        return Helper.createResponseEntity(versionService.findVersionId(id));
+    }
 }

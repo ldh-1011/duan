@@ -2,6 +2,7 @@ package udpm.hn.server.test.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import udpm.hn.server.test.core.staff.storageCapacity.model.response.StorageCapacityResponse;
 import udpm.hn.server.test.entity.StorageCapacity;
@@ -15,4 +16,7 @@ public interface StorageCapacityRepository extends JpaRepository<StorageCapacity
     List<StorageCapacityResponse> getAllStorageCapacityRepository();
 
     Optional<StorageCapacity> findByStorageCapacityName(String storageCapacityName);
+
+    @Query(value = "SELECT id AS id , storage_capacity_name AS storageCapacityName  FROM storage_capacity WHERE id = :idStorageCapacity" , nativeQuery = true)
+    Optional<StorageCapacityResponse> findByIdStorageCapacity(@Param("idStorageCapacity") String idStorageCapacity);
 }

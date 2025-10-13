@@ -33,4 +33,9 @@ public class ProcessorController {
     private ResponseEntity<?> deleteTechSpec(@PathVariable String id) {
         return Helper.createResponseEntity(techSpecService.deleteTechSpec(id));
     }
+
+    @GetMapping("/{id}")
+    private ResponseEntity<?> getTechSpec(@PathVariable String id) {
+        return Helper.createResponseEntity(techSpecService.findProcessorID(id));
+    }
 }

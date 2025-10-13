@@ -33,4 +33,9 @@ public class SensorController {
     private ResponseEntity<?> deleteSensor(@PathVariable String id) {
         return Helper.createResponseEntity(sensorService.deleteSensor(id));
     }
+
+    @GetMapping("/{id}")
+    private ResponseEntity<?> findSensorById(@PathVariable String id) {
+        return Helper.createResponseEntity(sensorService.findByIdSensor(id));
+    }
 }

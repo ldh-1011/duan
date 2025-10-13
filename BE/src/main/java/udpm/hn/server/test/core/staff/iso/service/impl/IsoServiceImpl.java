@@ -1,5 +1,6 @@
 package udpm.hn.server.test.core.staff.iso.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -7,13 +8,17 @@ import udpm.hn.server.test.core.common.base.ResponseObject;
 import udpm.hn.server.test.core.staff.iso.service.IsoService;
 import udpm.hn.server.test.entity.Iso;
 import udpm.hn.server.test.repository.IsoRepository;
+import udpm.hn.server.test.repository.ProductRepository;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class IsoServiceImpl implements IsoService {
+
     private final IsoRepository isoRepository;
+
+    private final ProductRepository productRepository;
 
     @Override
     public ResponseObject<?> getAllIso(){
@@ -56,14 +61,26 @@ public class IsoServiceImpl implements IsoService {
     }
 
     @Override
-    public ResponseObject<?> deleteIso(String id){
+    @Transactional
+    public ResponseObject<?> deleteIso(String id) {
         Optional<Iso> optionalIso = isoRepository.findById(id);
-        if(optionalIso.isEmpty()){
-            return new ResponseObject<>(null , HttpStatus.NOT_FOUND , "khong ton tai ");
+        if (optionalIso.isEmpty()) {
+            return new ResponseObject<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy ISO");
+        }
+
+        boolean isUsed = productRepository.existsByIsoId(id);
+        if (isUsed) {
+            return new ResponseObject<>(null, HttpStatus.BAD_REQUEST,
+                    "Không thể xoá ISO này vì đang được sử dụng trong sản phẩm!");
         }
 
         isoRepository.deleteById(id);
+        return new ResponseObject<>(null, HttpStatus.OK, "Xoá ISO thành công");
+    }
 
-        return new ResponseObject<>(null , HttpStatus.OK, "delete thanh cong");
+
+    @Override
+    public ResponseObject<?> findIsoById(String id){
+        return new ResponseObject<>(null , HttpStatus.OK, "lay iso chi tiet thanh cong");
     }
 }

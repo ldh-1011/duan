@@ -33,4 +33,9 @@ public class ResolutionController {
     public ResponseEntity<?> deleteResolution(@PathVariable String id) {
         return Helper.createResponseEntity(resolutionService.deleteResolution(id));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findResolutionId(@PathVariable String id) {
+        return Helper.createResponseEntity(resolutionService.findByResolutionId(id));
+    }
 }

@@ -11,4 +11,6 @@ public interface ResolutionService {
     ResponseObject<?> updateResolution(String id, Resolution resolution);
 
     ResponseObject<?> deleteResolution(String id);
+
+    ResponseObject<?> findByResolutionId(String id);
 }

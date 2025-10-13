@@ -12,4 +12,6 @@ public interface ColorService {
     ResponseObject<?> updateColor(String id, Color color);
 
     ResponseObject<?> deleteColor(String id);
+
+    ResponseObject<?> findAllColorId(String id);
 }

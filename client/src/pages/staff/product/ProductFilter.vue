@@ -4,7 +4,6 @@
       <FilterOutlined />
     </template>
 
-    <!-- ✅ Dàn đều các ô lọc full width, nút làm mới nhỏ gọn bên phải -->
     <div class="w-full grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-4 items-center">
       <!-- Ô nhập liệu tìm kiếm -->
       <a-input
@@ -30,7 +29,6 @@
         </a-select-option>
       </a-select>
 
-      <!-- Nút làm mới (giữ nguyên kích thước nhỏ) -->
       <a-tooltip title="Làm mới bộ lọc">
         <a-button
             @click="resetFilters"
@@ -65,8 +63,8 @@ const localKeyword = ref(props.keyword || '')
 const localStatus = ref<string | null>(props.status || null)
 
 const statusOptions = [
-  { label: 'Hoạt động', value: '0' },
-  { label: 'Ngừng hoạt động', value: '1' }
+  { label: 'Đang bán', value: '0' },
+  { label: 'Ngừng kinh doanh', value: '1' }
 ]
 
 watch(localKeyword, (val) => emit('update:keyword', val))

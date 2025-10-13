@@ -68,4 +68,10 @@ public class StorageCapacityImpl implements StorageCapacityService {
 
         return new ResponseObject<>(null , HttpStatus.OK , "delete thanh cong Storage Capacity");
     }
+
+    @Override
+    public ResponseObject<?> findByIdStorageCapacity(String id){
+        return new ResponseObject<>(storageCapacityRepository.findByIdStorageCapacity(id)
+                , HttpStatus.OK , "lay thanh cong chi tiet");
+    }
 }

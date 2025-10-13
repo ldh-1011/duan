@@ -33,4 +33,9 @@ public class StorageCapacityController {
     public ResponseEntity<?> deleteStorageCapacity(@PathVariable String id) {
         return Helper.createResponseEntity(storageCapacityService.deleteStorageCapacity(id));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getStorageCapacity(@PathVariable String id) {
+        return Helper.createResponseEntity(storageCapacityService.findByIdStorageCapacity(id));
+    }
 }
