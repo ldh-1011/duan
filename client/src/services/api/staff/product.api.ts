@@ -2,9 +2,6 @@ import request from '@/services/request'
 import type { AxiosResponse } from 'axios'
 import type { DefaultResponse } from '@/types/api.common'
 
-// =====================
-// 📦 TYPE DEFINITIONS
-// =====================
 export interface ProductResponse {
     id: string
     productCode: string

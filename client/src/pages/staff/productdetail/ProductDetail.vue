@@ -1,5 +1,8 @@
 <template>
-  <h1>san pham chi tiet</h1>
+  <BreadcrumbDefault label="Product detail">
+
+  </BreadcrumbDefault>
 </template>
 <script setup lang="ts">
+import BreadcrumbDefault from '@/components/custom/Div/BreadcrumbDefault.vue'
 </script>

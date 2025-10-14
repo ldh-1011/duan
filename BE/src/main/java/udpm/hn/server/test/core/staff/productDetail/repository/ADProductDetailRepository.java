@@ -24,7 +24,7 @@ public interface ADProductDetailRepository extends ProductDetailRepository {
                    sc.storage_capacity_name AS storageCapacityName,
                    pd.status                AS status
             FROM product_detail pd
-                     LEFT JOIN img i ON pd.img_id = i.id
+                     LEFT JOIN img i ON pd.id = i.product_detail_id
                      LEFT JOIN color c ON pd.color_id = c.id
                      LEFT JOIN version v ON pd.version_id = v.id
                      LEFT JOIN storage_capacity sc ON pd.storage_capacity_id = sc.id

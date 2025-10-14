@@ -17,7 +17,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Value("${ws.applicationPrefix}")
     private String applicationPrefix;
 
-    // FIX: Đổi từ ws.topicPrefix thành ws.brokerPrefix
     @Value("${ws.brokerPrefix}")
     private String brokerPrefix;
 
