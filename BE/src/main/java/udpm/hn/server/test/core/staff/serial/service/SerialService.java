@@ -5,5 +5,5 @@ import udpm.hn.server.test.core.common.base.ResponseObject;
 
 public interface SerialService {
 
-    ResponseObject<?> uploadSerial(MultipartFile file, String productDetailId);
+    ResponseObject<?> uploadSerialInactive(MultipartFile file, String productDetailId);
 }

@@ -29,4 +29,7 @@ public class OrdersDetail extends PrimaryEntity implements Serializable {
 
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
+
+    @Column(name = "note")
+    private String note;
 }

@@ -1,9 +1,10 @@
-package udpm.hn.server.test.core.staff.productDetail.model.request;
+package udpm.hn.server.test.core.staff.productDetail.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import udpm.hn.server.test.infrastructure.constant.EntityStatus;
 
 import java.math.BigDecimal;
 
@@ -11,21 +12,15 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUpdateProductDetailRequest{
-
+public class ProductDetailOneResponse {
     private String id;
-
-    private String productName;
-
     private BigDecimal price;
-
-    private String colorName;
-
+    private String name;
+    private String img;
+    private String color;
     private String versionName;
-
     private String storageCapacityName;
-
-    private String productDetailName;
-
+    private EntityStatus status;
     private int quantity;
+    private long quantitySerial;
 }

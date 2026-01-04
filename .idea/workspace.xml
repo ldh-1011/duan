@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8dfa541-4842-478d-8b3a-008b3ee5feda" name="Changes" comment="done fe" />
+    <list default="true" id="a8dfa541-4842-478d-8b3a-008b3ee5feda" name="Changes" comment="done fe">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -90,7 +93,7 @@
     "Spring Boot.BeApplication.executor": "Run",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/test/BE",
+    "last_opened_file_path": "D:/asmvue/BE",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -132,6 +135,8 @@
       <workItem from="1760107294240" duration="1861000" />
       <workItem from="1760320287359" duration="1915000" />
       <workItem from="1760349353695" duration="178000" />
+      <workItem from="1763456865162" duration="55000" />
+      <workItem from="1766543666889" duration="12000" />
     </task>
     <task id="LOCAL-00001" summary="done xx">
       <option name="closed" value="true" />

@@ -4,13 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import udpm.hn.server.test.core.common.base.ResponseObject;
 import udpm.hn.server.test.core.staff.productDetail.model.request.CreateUpdateProductDetailRequest;
 import udpm.hn.server.test.core.staff.productDetail.model.request.ProductDetailRequest;
 import udpm.hn.server.test.core.staff.productDetail.repository.*;
 import udpm.hn.server.test.core.staff.productDetail.service.ProductDetailService;
 import udpm.hn.server.test.entity.*;
+import udpm.hn.server.test.infrastructure.cloudinary.CloudinaryService;
+import udpm.hn.server.test.infrastructure.cloudinary.FileUpLoad;
+import udpm.hn.server.test.infrastructure.cloudinary.response.CloudinaryResponse;
 import udpm.hn.server.test.infrastructure.constant.EntityStatus;
+import udpm.hn.server.test.repository.ImgRepository;
 import udpm.hn.server.test.utils.Helper;
 
 import java.math.BigDecimal;
@@ -30,6 +35,10 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     private final ProductDetailVersionRepository productDetailVersionRepository;
 
     private final ProductsRepository productsRepository;
+
+    private final CloudinaryService cloudinaryService;
+
+    private final ImgRepository imgRepository;
 
     @Override
     public ResponseObject<?> getAllProductDetails(ProductDetailRequest request) {
@@ -61,7 +70,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     }
 
     @Override
-    public ResponseObject<?> addProductDetail(CreateUpdateProductDetailRequest request){
+    public ResponseObject<?> addProductDetail(CreateUpdateProductDetailRequest request , MultipartFile[] images){
         if (request.getPrice() == null || request.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
             return new ResponseObject<>(
                     null,
@@ -96,7 +105,28 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         productDetail.setStorageCapacity(optionalStorageCapacity.get());
         productDetail.setVersion(optionalVersion.get());
         productDetail.setProduct(optionalProduct.get());
+        productDetail.setProductDetailName(request.getProductDetailName());
+        productDetail.setStockQuantity(request.getQuantity());
         productDetailRepository.save(productDetail);
+
+        if (images != null && images.length > 0) {
+            for (MultipartFile file : images) {
+
+                // validate file
+                FileUpLoad.assertAllowed(file, FileUpLoad.IMAGES_PATTERN);
+
+                // upload cloudinary
+                CloudinaryResponse cloudinaryResponse =
+                        cloudinaryService.uploadImage(file, "product-detail");
+
+                // save img
+                Img img = new Img();
+                img.setLinkImage(cloudinaryResponse.getUrl());
+                img.setProductDetail(productDetail);
+
+                imgRepository.save(img);
+            }
+        }
 
         return new ResponseObject<>(productDetail , HttpStatus.CREATED , "them thanh cong product detail" );
     }
@@ -142,6 +172,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         productDetail.setStorageCapacity(optionalStorageCapacity.get());
         productDetail.setVersion(optionalVersion.get());
         productDetail.setProduct(optionalProduct.get());
+        productDetail.setProductDetailName(request.getProductDetailName());
         productDetailRepository.save(productDetail);
 
         return new ResponseObject<>(null , HttpStatus.CREATED , "update thanh cong product detail" );
@@ -176,5 +207,10 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         productDetailRepository.save(productDetail);
 
         return new ResponseObject<>(null , HttpStatus.ACCEPTED , "thay doi trang thai thanh cong" );
+    }
+
+    @Override
+    public ResponseObject<?> getOneProductDetail(String id){
+        return new ResponseObject<>(productDetailRepository.getOneProductDetail(id) , HttpStatus.OK , "Lấy thành công productDetail");
     }
 }

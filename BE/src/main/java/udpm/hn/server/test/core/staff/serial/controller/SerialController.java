@@ -8,15 +8,18 @@ import udpm.hn.server.test.core.staff.serial.service.SerialService;
 import udpm.hn.server.test.infrastructure.constant.MappingConstants;
 
 @RestController
-@RequestMapping(MappingConstants.API_STAFF_SERIAL)
+@RequestMapping("/api/serial")
 @RequiredArgsConstructor
 public class SerialController {
     private final SerialService serialService;
 
-    @PostMapping("/upload-serial/{productDetailId}")
-    public ResponseEntity<?> uploadSerial(
+    @PostMapping("/upload-serial/inactive/{productDetailId}")
+    public ResponseEntity<?> uploadSerialInactive(
             @RequestParam("file") MultipartFile file,
             @PathVariable("productDetailId") String productDetailId) {
-        return ResponseEntity.ok(serialService.uploadSerial(file, productDetailId));
+        return ResponseEntity.ok(serialService.uploadSerialInactive(file, productDetailId));
     }
+
+//    @PostMapping("/changeStatus/serial")
+
 }

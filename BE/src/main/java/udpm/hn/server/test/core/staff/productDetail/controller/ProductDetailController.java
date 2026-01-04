@@ -1,8 +1,10 @@
 package udpm.hn.server.test.core.staff.productDetail.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import udpm.hn.server.test.core.staff.productDetail.model.request.CreateUpdateProductDetailRequest;
 import udpm.hn.server.test.core.staff.productDetail.model.request.ProductDetailRequest;
 import udpm.hn.server.test.core.staff.productDetail.service.ProductDetailService;
@@ -21,9 +23,11 @@ public class ProductDetailController {
         return Helper.createResponseEntity(productDetailService.getAllProductDetails(request));
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addProductDetail(@RequestBody CreateUpdateProductDetailRequest request){
-        return Helper.createResponseEntity(productDetailService.addProductDetail(request));
+    @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addProductDetail(@RequestPart("data") CreateUpdateProductDetailRequest request, @RequestPart(value = "images", required = false) MultipartFile[] images) {
+        return Helper.createResponseEntity(
+                productDetailService.addProductDetail(request, images)
+        );
     }
 
     @PutMapping("/update/{id}")
@@ -39,5 +43,10 @@ public class ProductDetailController {
     @PutMapping("/change_status/{id}")
     public ResponseEntity<?> changeProductStatus(@PathVariable String id){
         return Helper.createResponseEntity(productDetailService.changeStatus(id));
+    }
+
+    @PostMapping("/chi-tiet")
+    private ResponseEntity<?> chiTiet(@RequestBody CreateUpdateProductDetailRequest request){
+        return Helper.createResponseEntity(productDetailService.getOneProductDetail(request.getId()));
     }
 }

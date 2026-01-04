@@ -28,7 +28,7 @@ public class SerialServiceImpl implements SerialService {
     private final ProductDetailRepository productDetailRepository;
 
     @Override
-    public ResponseObject<?> uploadSerial(MultipartFile file, String productDetailId) {
+    public ResponseObject<?> uploadSerialInactive(MultipartFile file, String productDetailId) {
         if (file == null || file.isEmpty()) {
             return new ResponseObject<>(null, HttpStatus.BAD_REQUEST, "File không được để trống");
         }
@@ -67,12 +67,15 @@ public class SerialServiceImpl implements SerialService {
                 Serial entity = new Serial();
                 entity.setSerialNumber(serial);
                 entity.setProductDetail(productDetail);
-                entity.setStatus(EntityStatus.ACTIVE);
+                entity.setStatus(EntityStatus.INACTIVE);
                 serialRepository.save(entity);
             }
 
-            int newQuantity = (productDetail.getStockQuantity() == null ? 0 : productDetail.getStockQuantity()) + serialList.size();
-            productDetail.setStockQuantity(newQuantity);
+            int newQuantity = (productDetail.getQuantitySeril() == null ? 0 : productDetail.getQuantitySeril()) + serialList.size();
+            if(newQuantity > productDetail.getStockQuantity()){
+                return new ResponseObject<>(null , HttpStatus.CONFLICT , "Số lượng serial k đc lớn hơn số lượng tồn kho");
+            }
+            productDetail.setQuantitySeril(newQuantity);
             productDetailRepository.save(productDetail);
 
             return new ResponseObject<>(
@@ -87,5 +90,4 @@ public class SerialServiceImpl implements SerialService {
             return new ResponseObject<>(null, HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi xử lý dữ liệu: " + e.getMessage());
         }
     }
-
 }

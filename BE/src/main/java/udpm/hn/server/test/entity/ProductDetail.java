@@ -24,8 +24,14 @@ public class ProductDetail extends PrimaryEntity implements Serializable {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Column(name = "product_detail_name")
+    private String productDetailName;
+
     @Column(name = "stock_quantity")
     private Integer stockQuantity;
+
+    @Column(name = "quantity_seril")
+    private Integer quantitySeril;
 
     @Column(name = "price", precision = 15, scale = 2)
     private BigDecimal price;

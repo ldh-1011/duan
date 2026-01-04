@@ -1,9 +1,11 @@
 package udpm.hn.server.test.core.staff.productDetail.model.response;
 
+import java.math.BigDecimal;
+
 public interface ProductDetailResponse {
     String getId();
 
-    String getPrice();
+    BigDecimal getPrice();
 
     String getImg();
 
